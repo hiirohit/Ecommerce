@@ -1,10 +1,11 @@
 import React from 'react'
+import Products from './components/Products'
 
 function App() {
   return (
-    <div>App
-      
-    </div>
+    <>
+    <Products />
+    </>
   )
 }
 
