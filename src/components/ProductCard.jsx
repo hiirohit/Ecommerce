@@ -2,14 +2,14 @@ import { FaShoppingCart } from 'react-icons/fa'
 import React, { useState } from 'react'
 import ProductViewModal from "./ProductViewModal"
 function ProductCard({
-    productId,
-      productName,
-      image,
-      description,
-      quantity,
-      price,
-      discount,
-      specialPrice,
+        productId,
+        productName,
+        image,
+        description,
+        quantity,
+        price,
+        discount,
+        specialPrice,
 }) 
     {
     
@@ -34,7 +34,7 @@ function ProductCard({
                 price,
                 discount,
                 specialPrice,
-        })}} className='w-full overflow-hidden aspect-[3/2]'>
+        })}} className='w-full overflow-hidden aspect-3/2'>
             <img src= {image} alt={productName} className='w-full h-full cursor-pointer transition-transform duration-300 transform hover:scale-120'/>
         </div>
         <div className='p-4'>

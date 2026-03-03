@@ -2,19 +2,19 @@ import { MdDone, MdClose } from 'react-icons/md'
 
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { Divider } from '@mui/material'
-import { useState } from 'react'
+ 
 import Status from './Status';
 
 export default function ProductViewModal({open,setOpen,isAvailable,product}) {
 
     const { id, productName, image, description, quantity, price, discount, specialPrice} = product;
-    const handleClickOpen = () => {
+    const handleClickOpen = () => { 
         setOpen(true)
     }
 
     return (
         <>
-        <Dialog open={open} as="div" className="relative z-10 " onClose={close}>
+        <Dialog open={open} as="div" className="relative z-10 " onClose={() => setOpen(false)}>
              <DialogBackdrop className="fixed inset-0 bg-gray-300 transition-opacity bg-opacity-75"/>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
@@ -22,8 +22,8 @@ export default function ProductViewModal({open,setOpen,isAvailable,product}) {
                 transition
                 className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all md:max-w-[620px] md:min-w-[620px] w-full "
                 >
-                    {image && (
-                        <div className='flex justify-center aspect-[3/2]'>
+                    {image && ( 
+                        <div className='flex justify-center aspect-3/2'>
                              <img src= {image} alt={productName} />
                         </div>
                         )}
