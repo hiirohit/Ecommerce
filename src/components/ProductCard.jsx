@@ -1,6 +1,7 @@
 import { FaShoppingCart } from 'react-icons/fa'
 import React, { useState } from 'react'
 import ProductViewModal from "./ProductViewModal"
+import truncate from './truncate';
 function ProductCard({
         productId,
         productName,
@@ -24,7 +25,7 @@ function ProductCard({
     }
 
   return (
-    <div className='border rounded-lg shrink-x1 overflow-hidden transition-shadow duration-300'>
+    <div className='border rounded-lg shrink-xl overflow-hidden transition-shadow duration-300'>
         <div onClick={() => {handleProductView({
                 id : productId,
                 productName,
@@ -47,9 +48,13 @@ function ProductCard({
                     price,
                     discount,
                     specialPrice,
-            })}} className='text-lg font-semibold mb-2 cursor-pointer'>{productName}</h2>
+            })}} className='text-lg font-semibold mb-2 cursor-pointer'>
+                    {truncate(productName, 50)}
+            </h2>
             <div className='min-h-20 max-h-20'>
-                <p className='text-gray-600 text-sm'>{description}</p>
+                <p className='text-gray-600 text-sm'>
+                    {truncate(description, 80)}
+                    </p>
             </div>
             <div className='flex items-center justify-between'>
                 {specialPrice ? (
