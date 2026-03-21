@@ -30,7 +30,7 @@ function Filter({Categories}) {
             if(searchTerm){
                 searchParams.set("keyword",searchTerm);
             }else{
-                searchTerm.delete("keyword");
+                searchParams.delete("keyword");
             }
             navigate(`${pathname}?${searchParams.toString()}`);
         },700);
