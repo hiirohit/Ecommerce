@@ -3,15 +3,19 @@ import { MdArrowBack, MdShoppingCart } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ItemContent from './ItemContent';
+import CartEmpty from './CartEmpty';
+import { formatPrice } from '../../utils/formatPrice';
 
 function Cart() {
     const dispatch = useDispatch();
     const {cart} = useSelector((state) => state.carts);
     const newCart = {...cart};
     newCart.totalPrice = cart?.reduce(
-        (acc, cur) => acc * Number(cur?.specialPrice) * Number(cur?.quantity), 0
+        (acc, cur) => acc + Number(cur?.specialPrice) * Number(cur?.quantity), 0
     );
-    if(!cart || cart.length === 0) return <h1>cart is empty</h1>;
+
+    if(!cart || cart.length === 0) return <CartEmpty />;
+    
     return (
     <div className='lg:px-14 sm:px-8 px-4 py-10'>
         <div className='flex flex-col items-center md-12'>
@@ -46,7 +50,7 @@ function Cart() {
             <div className='flex text-sm gap-1 flex-col'>
                 <div className='flex justify-between w-full md:text-lg text-sm font-semibold'>
                     <span>SubTotal</span>
-                    <span>$400</span>
+                    <span>{formatPrice(newCart?.totalPrice)}</span>
                 </div>
                 <p className='text-slate-500'>
                     Taxes and shapping colculation at checkout

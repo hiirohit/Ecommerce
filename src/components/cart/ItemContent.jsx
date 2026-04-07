@@ -5,7 +5,9 @@ import { useDispatch } from 'react-redux';
 import { increaseCartQuantity } from '../../store/actions/increaseCartQuantity';
 import toast from 'react-hot-toast';
 import { DecreaseCartQuantity } from '../../store/actions/decreaseCartQuantity';
-
+import { removeFromCart } from '../../store/actions/removeFromCart';
+import { formatPrice } from '../../utils/formatPrice';
+import truncate from "../../utils/truncate"
 function ItemContent({
     productId,
     productName,
@@ -37,19 +39,16 @@ function ItemContent({
             newQuantity
         ));
         }
-
-    const removeItmeFromCart = (cartItems) => {
-            
-
-        }
-        
     }
+    const removeItemFromCart = (cartItems) => {
+        dispatch(removeFromCart(cartItems, toast))
+     }
   return (
     <div className='grid md:grid-cols-5 grid-cols-4 md:text-md text-sm gap-4 items-center border border-slate-200'>
         <div className='md:col-span-2 justify-self-start flex flex-col gap-2'>
             <div className='flex md:flex-row flex-col lg:gap-4 sm:gap-3 gap-0 items-start'>
                 <h3 className='lg:text-[17px] text-sm font-semibold text-slate-600'>
-                    {productName}
+                    {truncate(productName)}
                 </h3>
 
             </div>
@@ -58,8 +57,8 @@ function ItemContent({
             
             <div className='flex items-start gap-5 mt-3'>
                 <button className='flex items-center font-semibold space-x-2 px-4 py-1 text-xs border border-rose-600 text-rose-600 rounded-md hover:bg-red-50 transition duration-200'
-                        onClick={() => removeItmeFromCart({
-                            productId,
+                        onClick={()=> removeItemFromCart({
+                             productId,
                             productName,
                             image,
                             descripation,
@@ -78,7 +77,7 @@ function ItemContent({
             </div>
         </div>       
         <div className='justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold'>
-            {Number(specialPrice)}
+            {formatPrice(Number(specialPrice))}
         </div> 
         <div className='justify-self-center'>
             <SetQuantity 
@@ -109,7 +108,7 @@ function ItemContent({
                     />
         </div> 
         <div className='justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold'>
-            {Number(currentQuantity) * Number(specialPrice)}
+            {formatPrice(Number(currentQuantity) * Number(specialPrice))    }
         </div>
     </div>
   )
