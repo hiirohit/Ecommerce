@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import {useForm} from "react-hook-form";
-import {AiOutlineLogin} from "react-icons/ai"
-import InputField from "../shared/InputField"
-import { useDispatch } from 'react-redux';
-import { authenticationSignInUser } from '../../store/actions/authenticationSignInUser';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-function Login() {
+import { FaUserPlus } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { authenticationSignInUser } from '../../store/actions/authenticationSignInUser';
+import InputField from '../shared/InputField';
+import { registerNewUser } from '../../store/actions/registerNewUser';
+
+function Register() {
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -20,20 +22,20 @@ function Login() {
         mode: "onTouched",
     });
 
-    const loginHandler = async (sendData) => {
-        console.log("login clicked")
-        dispatch(authenticationSignInUser(sendData, toast, reset, navigate, setLoader));
+    const registerHandler = async (sendData) => {
+        console.log("Register clicked")
+        dispatch(registerNewUser(sendData, toast, reset, navigate, setLoader));
     };
 
   return (
     <div className='min-h-[calc(100vh-64px)] flex flex-col justify-center items-center'>
         <form
-            onSubmit={handleSubmit(loginHandler)}
+            onSubmit={handleSubmit(registerHandler)}
             className='sm:w-[450px] w-[360px] shadow-custom py-8 sm:px-8 px-4 rounded-md'>
                 <div className='flex flex-col items-center justify-center space-y-4'>
-                    <AiOutlineLogin className='text-slate-800  text-5xl'/>
+                    <FaUserPlus className='text-slate-800  text-5xl'/>
                     <h1 className='text-slate-800 text-center font-montserrat lg:text-3xl text-2xl font-bold'>
-                        Login Here
+                        Register Here
                     </h1>
                 </div>
             <hr className='mt-2 mb-5 text-black'/>
@@ -48,11 +50,23 @@ function Login() {
                     message="UserName is required"
                     placeholder="Enter your name"
                 />
+                
+                <InputField 
+                    Lable="Email"
+                    required
+                    id="email"
+                    type="email"
+                    register={register}
+                    errors={errors}
+                    message="Email is required"
+                    placeholder="Enter your email"
+                />
                 <InputField 
                     Lable="Password"
                     required
                     id="password"
                     type="password"
+                    min={6}
                     register={register}
                     errors={errors}
                     message="password is required"
@@ -71,9 +85,9 @@ function Login() {
                     
             </button>
             <p className='text-center text-sm text-slate-700 mt-6 '>
-                Don't have an account?
+                Already have an account?
                 <Link
-                    to="/register" 
+                    to="/login" 
                     className='font-semibold underline hover:text-black' 
                     >
                     <span>SignUp</span>
@@ -85,4 +99,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Register

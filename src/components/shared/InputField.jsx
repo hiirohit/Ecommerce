@@ -1,7 +1,7 @@
 import React from 'react'
 
 function InputField({
-    lable,
+    Lable,
     id,
     type,
     errors,
@@ -15,13 +15,13 @@ function InputField({
 }) {
   return (
     <div className='flex flex-col gap-1 w-full'>
-        <lable 
+        <Lable 
             htmlFor="id"
             className={`${
                 className ? className : ""
             } font-semibold text-sm text-slate-800`}>
-                {lable}
-        </lable>
+                {Lable}
+        </Lable>
         <input 
             type={type} 
             id={id}

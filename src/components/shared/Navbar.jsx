@@ -5,6 +5,7 @@ import { IoIosMenu } from "react-icons/io"
 import { Link, useLocation } from 'react-router-dom'
 import {Badge} from "@mui/material"
 import { useSelector } from 'react-redux'
+import UserMenu from '../UserMenu'
 function Navbar() {
   
   const path = useLocation().pathname;
@@ -65,7 +66,7 @@ function Navbar() {
               </li>
                 {user && user.id ? (
                       <li className='font-medium transition-all duration-150'>
-                          <p>Welcome</p>
+                          <UserMenu />
                       </li>    
                 ) : (
               <li className='font-medium transition-all duration-150'>
