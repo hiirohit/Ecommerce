@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { FaUserPlus } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { authenticationSignInUser } from '../../store/actions/authenticationSignInUser';
 import InputField from '../shared/InputField';
 import { registerNewUser } from '../../store/actions/registerNewUser';
 

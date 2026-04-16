@@ -2,8 +2,12 @@ import React from 'react'
 import InputField from '../shared/InputField'
 import { useForm } from 'react-hook-form';
 import { FaAddressCard } from 'react-icons/fa';
-import { useSelector} from 'react-redux'
-function AddAddressForm() {
+import { useDispatch, useSelector} from 'react-redux'
+import { addUpdateUserAddress } from '../../store/reducers/addUpdateUserAddress';
+import toast from 'react-hot-toast';
+
+function AddAddressForm({address, setOpen}) {
+    const dispatch = useDispatch();
     const {btnLoader}= useSelector((state) => state.error);
     const {
             register,
@@ -13,9 +17,9 @@ function AddAddressForm() {
         } = useForm({
             mode: "onTouched",
         });
-    const OnSaveAddressHandler = async () => {
+    const OnSaveAddressHandler = async (sendData) => {
             console.log("login clicked")
-            // dispatch(authenticationSignInUser(sendData, toast, reset, navigate, setLoader));
+            dispatch(addUpdateUserAddress(sendData, toast, address?.addressId, setOpen));
         };
   return (
     <div className=''>
@@ -30,7 +34,7 @@ function AddAddressForm() {
                     <InputField 
                         Lable="BuildingName"
                         required
-                        id="building"
+                        id="buildingName"
                         type="text"
                         register={register}
                         errors={errors}
@@ -60,7 +64,7 @@ function AddAddressForm() {
                     <InputField 
                         Lable="Pincode"
                         required
-                        id="pincode"
+                        id="pinCode"
                         type="text"
                         register={register}
                         errors={errors}
