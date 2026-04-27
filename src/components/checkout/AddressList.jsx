@@ -17,7 +17,9 @@ function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
     }
 
     const handleAddressSelection = (addresses) => {
+        console.log("first")
         dispatch(selectedUserCheckOutAddress(addresses));
+
     }
 
   return (
