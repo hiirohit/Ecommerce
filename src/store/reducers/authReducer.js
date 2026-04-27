@@ -1,6 +1,7 @@
 const initialState = {
     user: null,
     address: [],
+    selectedUserAddress:null,
 
 }
 export const authReducer = (state = initialState, action) => {

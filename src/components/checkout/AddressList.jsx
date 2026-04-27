@@ -1,14 +1,28 @@
 import React from 'react'
-import { FaBuilding } from 'react-icons/fa';
-import { useDispatch } from 'react-redux'
+import { FaBuilding, FaCheckCircle, FaEdit, FaStreetView, FaTrash } from 'react-icons/fa';
+import {MdLocationCity, MdPinDrop, MdPublic } from "react-icons/md"
+import { useDispatch, useSelector } from 'react-redux'
+import { selectedUserCheckOutAddress } from '../../store/actions/selectedUserCheckOutAddress';
 
 function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
     const dispatch = useDispatch();
-    const selectedUserAddress = 1;
+    const selectedUserAddress = useSelector((state) => state.auth);
+    
+    const onEditButtonHandler = (addresses) => {
+        setSelectedAddress(addresses);
+        setopenAddressModal(true);
+    }
+    const onDeleteButtonHandler = (addresses) => {
+        setSelectedAddress(addresses);
+    }
+
+    const handleAddressSelection = (addresses) => {
+        dispatch(selectedUserCheckOutAddress(addresses));
+    }
 
   return (
     <div className='space-y-4'>
-        {addresses.map((address) => {
+        {addresses.map((address) => (
             <div 
                 key={address.addressId}
                 onClick={() => handleAddressSelection(address)}
@@ -22,13 +36,50 @@ function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
                             <div className='flex items-center'>
                                 <FaBuilding size={14} 
                                     className='mr-2 text-gray-600'/>
+                                    <p className='font-semibold'>{address.buildingName}</p>
+                                    {selectedUserAddress?.addressId === address.addressId  && (
+                                        <FaCheckCircle  className='text-green-500 ml-2'/>
+                                    )}
+                            </div>
+                            <div className='flex items-center'>
+                                <FaStreetView size={17} 
+                                    className='mr-2 text-gray-600'/>
+                                    <p>{address.street}</p>
+                            </div>
+                            <div className='flex items-center'>
+                                <MdLocationCity size={17} 
+                                    className='mr-2 text-gray-600'/>
+                                    <p>{address.city}</p>
+                            </div>
+                            <div className='flex items-center'>
+                                <MdLocationCity size={17} 
+                                    className='mr-2 text-gray-600'/>
+                                    <p>{address.state}</p>
+                            </div>
+                            <div className='flex items-center'>
+                                <MdPinDrop size={17} 
+                                    className='mr-2 text-gray-600'/>
+                                    <p>{address.city}</p>
+                            </div>
+                            <div className='flex items-center'>
+                                <MdPublic size={17} 
+                                    className='mr-2 text-gray-600'/>
+                                    <p>{address.city}</p>
                             </div>
                         </div>
 
                     </div>
+                    <div className='flex gap-3 absolute top-4 right-2'>
+                        <button onClick={() => onEditButtonHandler(address)}>
+                                <FaEdit size={18} className="text-teal-700" />
+                        </button>
+                        <button onClick={() => onDeleteButtonHandler(address)}>
+                                <FaTrash size={18} className="text-teal-700" />
+                        </button>
+                    </div>  
 
             </div>
-        })}
+        ))}
     </div>
   )
 }
