@@ -1,8 +1,8 @@
 import {configureStore} from "@reduxjs/toolkit"; 
-import { productReducer } from "./ProductReducer";
-import { errorReducer } from "./errorReducer";
-import { cartReducer } from "./cartReducer";
-import { authReducer } from "./authReducer";
+import { productReducer } from "./reducers/ProductReducer";
+import { errorReducer } from "./reducers/errorReducer";
+import { cartReducer } from "./reducers/cartReducer";
+import { authReducer } from "./reducers/authReducer";
 
 
 //here i am getting data that store in browser localStorage.

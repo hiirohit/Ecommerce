@@ -1,11 +1,16 @@
 import api from "../../api/api";
 
  export const addUpdateUserAddress = 
-    (sendData, toast, addressId, setOpen) => async (dispatch, getState) => {
+    (sendData, toast, addressId, setOpen, getUserAddresses) => async (dispatch, getState) => {
         
         dispatch({type:"BUTTON_LOADER"});
         try {
-            const {data} = await api.post("/addresses",sendData);
+            if (!addressId) {
+                const {data} = await api.post("/addresses",sendData);
+            } else {
+                await api.put(`/addresses/${addressId}`,sendData);
+            }
+            dispatch(getUserAddresses());
             toast.success("Address saved successfully")
             dispatch({type:"IS_SUCCESS"})
         } catch (error) {

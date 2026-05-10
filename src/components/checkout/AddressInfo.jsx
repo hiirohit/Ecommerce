@@ -3,18 +3,35 @@ import React, { useState } from 'react'
 import{FaAddressBook} from "react-icons/fa"
 import AddressInfoModal from './AddressInfoModal';
 import AddAddressForm from './AddAddressForm';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddressList from './AddressList';
+import DeleteModal from './DeleteModal';
+import toast from 'react-hot-toast';
+import { deleteUserAddress } from '../../store/actions/deleteUserAddress';
+import { getUserAddresses } from '../../store/actions/getUserAddresses';
+import { clearCheckoutAddress } from '../../store/actions/clearCheckOutAddress';
 function AddressInfo({address}) {
     const [openAddressModal, setOpenAddressModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [selectedAddress,setSelectedAddress] = useState("");
+    
     const addNewAddressHandler = () => {
         setSelectedAddress("");
         setOpenAddressModal(true);
     }
+    const dispatch = useDispatch();
+
+    const deleteAddressHandler = () => {
+        dispatch(deleteUserAddress(
+            toast,
+            selectedAddress?.addressId,
+            setOpenDeleteModal,
+            getUserAddresses,
+            clearCheckoutAddress,
+        ))
+    }
     
     const noAddressExist = !address || address.lenght === 0;
-
     const {isLoading, btnLoader} = useSelector((state) => state.error);
     return (
     <div className='pt-4 '>
@@ -49,7 +66,8 @@ function AddressInfo({address}) {
                                 <AddressList
                                     addresses={address}
                                     setSelectedAddress={setSelectedAddress}
-                                    setopenAddressModal={setOpenAddressModal}/>
+                                    setopenAddressModal={setOpenAddressModal}
+                                    setOpenDeleteModal={setOpenDeleteModal}/>
                             </div>
                             { address.length > 0 && (
                             <div className='mt-4'>
@@ -72,6 +90,14 @@ function AddressInfo({address}) {
                         address={selectedAddress} 
                         setOpen={setOpenAddressModal}/>
             </AddressInfoModal>
+            <DeleteModal
+                open={openDeleteModal}
+                setOpen={setOpenDeleteModal}
+                loader={btnLoader}
+                title="Delete Address"
+                onDeleteHandler={deleteAddressHandler}>
+                
+            </DeleteModal>
     </div>
   )
 }

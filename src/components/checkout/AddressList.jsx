@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaBuilding, FaCheckCircle, FaEdit, FaStreetView, FaTrash } from 'react-icons/fa';
 import {MdLocationCity, MdPinDrop, MdPublic } from "react-icons/md"
 import { useDispatch, useSelector } from 'react-redux'
 import { selectedUserCheckOutAddress } from '../../store/actions/selectedUserCheckOutAddress';
 
-function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
+function AddressList({addresses, setSelectedAddress, setopenAddressModal, setOpenDeleteModal}) {
     const dispatch = useDispatch();
-    const selectedUserAddress = useSelector((state) => state.auth);
+    const {selectedUserAddress} = useSelector((state) => state.auth);
     
     const onEditButtonHandler = (addresses) => {
         setSelectedAddress(addresses);
@@ -14,6 +14,7 @@ function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
     }
     const onDeleteButtonHandler = (addresses) => {
         setSelectedAddress(addresses);
+        setOpenDeleteModal(true)
     }
 
     const handleAddressSelection = (addresses) => {
@@ -46,11 +47,6 @@ function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
                             <div className='flex items-center'>
                                 <FaStreetView size={17} 
                                     className='mr-2 text-gray-600'/>
-                                    <p>{address.street}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <MdLocationCity size={17} 
-                                    className='mr-2 text-gray-600'/>
                                     <p>{address.city}</p>
                             </div>
                             <div className='flex items-center'>
@@ -59,14 +55,19 @@ function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
                                     <p>{address.state}</p>
                             </div>
                             <div className='flex items-center'>
+                                <MdLocationCity size={17} 
+                                    className='mr-2 text-gray-600'/>
+                                    <p>{address.pinCode}</p>
+                            </div>
+                            <div className='flex items-center'>
                                 <MdPinDrop size={17} 
                                     className='mr-2 text-gray-600'/>
-                                    <p>{address.city}</p>
+                                    <p>{address.street}</p>
                             </div>
                             <div className='flex items-center'>
                                 <MdPublic size={17} 
                                     className='mr-2 text-gray-600'/>
-                                    <p>{address.city}</p>
+                                    <p>{address.country}</p>
                             </div>
                         </div>
 
@@ -76,7 +77,7 @@ function AddressList({addresses, setSelectedAddress, setopenAddressModal}) {
                                 <FaEdit size={18} className="text-teal-700" />
                         </button>
                         <button onClick={() => onDeleteButtonHandler(address)}>
-                                <FaTrash size={18} className="text-teal-700" />
+                                <FaTrash size={18} className="text-red-700" />
                         </button>
                     </div>  
 

@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import InputField from '../shared/InputField'
 import { useForm } from 'react-hook-form';
 import { FaAddressCard } from 'react-icons/fa';
 import { useDispatch, useSelector} from 'react-redux'
 import { addUpdateUserAddress } from '../../store/reducers/addUpdateUserAddress';
+import { getUserAddresses } from '../../store/actions/getUserAddresses';
+
 import toast from 'react-hot-toast';
 
 function AddAddressForm({address, setOpen}) {
@@ -13,14 +15,26 @@ function AddAddressForm({address, setOpen}) {
             register,
             handleSubmit,
             reset,
+            setValue,
             formState: {errors},
         } = useForm({
             mode: "onTouched",
         });
     const OnSaveAddressHandler = async (sendData) => {
             console.log("login clicked")
-            dispatch(addUpdateUserAddress(sendData, toast, address?.addressId, setOpen));
+            dispatch(addUpdateUserAddress(sendData, toast, address?.addressId, setOpen, getUserAddresses));
         };
+        
+    useEffect(() => {
+        if(address?.addressId){
+            setValue("buildingName",address?.buildingName);
+            setValue("city",address?.city);
+            setValue("street",address?.street);
+            setValue("state",address?.state);
+            setValue("pinCode",address?.pinCode);
+            setValue("country",address?.country);
+        }
+    },[address])
   return (
     <div className=''>
             <form
@@ -28,7 +42,8 @@ function AddAddressForm({address, setOpen}) {
                 className=''>
                     <div className='flex justify-center items-center mb-4 font-semibold text-2xl text-slate-800 py-2 px-4'>
                         <FaAddressCard className='mr-2 text-2xl'/>
-                        Add Address
+                        {!address?.addressId ? "Add Address" : "Update Address"}
+                        
                     </div>
                 <div className='flex flex-col gap-4'>
                     <InputField 
