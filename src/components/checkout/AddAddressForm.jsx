@@ -3,7 +3,7 @@ import InputField from '../shared/InputField'
 import { useForm } from 'react-hook-form';
 import { FaAddressCard } from 'react-icons/fa';
 import { useDispatch, useSelector} from 'react-redux'
-import { addUpdateUserAddress } from '../../store/reducers/addUpdateUserAddress';
+import { addUpdateUserAddress } from '../../store/actions/addUpdateUserAddress';
 import { getUserAddresses } from '../../store/actions/getUserAddresses';
 
 import toast from 'react-hot-toast';

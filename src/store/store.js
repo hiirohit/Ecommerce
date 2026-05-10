@@ -3,6 +3,8 @@ import { productReducer } from "./reducers/ProductReducer";
 import { errorReducer } from "./reducers/errorReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { authReducer } from "./reducers/authReducer";
+import { paymentMethodReducer } from "./reducers/paymentMethodReducer";
+
 
 
 //here i am getting data that store in browser localStorage.
@@ -26,6 +28,7 @@ export const store = configureStore(
             error: errorReducer,
             carts: cartReducer,
             auth: authReducer,
+            payment: paymentMethodReducer,
         },
         preloadedState: initialState,
     }
