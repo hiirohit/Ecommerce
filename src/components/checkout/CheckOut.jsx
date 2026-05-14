@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserAddresses } from '../../store/actions/getUserAddresses';
 import toast from 'react-hot-toast';
 import ErrorPage from '../shared/ErrorPage';
+import PaymentMethod from './PaymentMethod';
 function CheckOut() {
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch();
@@ -51,6 +52,7 @@ function CheckOut() {
         ) : (
             <div className='mt-5'>
                 {activeStep === 0 && <AddressInfo address={address}/>}
+                {activeStep === 1 && <PaymentMethod />}
             </div>
         )}
         
