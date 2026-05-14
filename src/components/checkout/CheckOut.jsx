@@ -6,12 +6,16 @@ import { getUserAddresses } from '../../store/actions/getUserAddresses';
 import toast from 'react-hot-toast';
 import ErrorPage from '../shared/ErrorPage';
 import PaymentMethod from './PaymentMethod';
+import OrderSummary from './OrderSummary';
 function CheckOut() {
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch();
     const {isloading, errorMessage} = useSelector((state) => state.error)
     const {address, selectedUserAddress} = useSelector((state) => state.auth)
-    const paymentMethod = false
+    
+    const {paymentMethod} = useSelector((state) => state.payment);
+    const {cart,totalPrice} = useSelector((state) => state.carts);
+   
     const HandleBack = () => {
         setActiveStep((prevStep) => prevStep - 1);
     }
@@ -53,6 +57,12 @@ function CheckOut() {
             <div className='mt-5'>
                 {activeStep === 0 && <AddressInfo address={address}/>}
                 {activeStep === 1 && <PaymentMethod />}
+                {activeStep === 2 && <OrderSummary 
+                                        totalPrice={totalPrice}
+                                        cart={cart}
+                                        address={selectedUserAddress}
+                                        paymentMethod={paymentMethod}
+                                        />}
             </div>
         )}
         
