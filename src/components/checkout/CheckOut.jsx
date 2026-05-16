@@ -7,6 +7,8 @@ import toast from 'react-hot-toast';
 import ErrorPage from '../shared/ErrorPage';
 import PaymentMethod from './PaymentMethod';
 import OrderSummary from './OrderSummary';
+import StripePayment from './StripePayment';
+import PayPalPayment from './PayPalPayment';
 function CheckOut() {
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch();
@@ -63,6 +65,17 @@ function CheckOut() {
                                         address={selectedUserAddress}
                                         paymentMethod={paymentMethod}
                                         />}
+                {activeStep === 3 && 
+                                <>
+                                {paymentMethod === "Stripe" ? (
+                                    <StripePayment />
+                                ) : (
+                                    <PayPalPayment/>
+                                )}
+
+                                </>
+                }
+
             </div>
         )}
         

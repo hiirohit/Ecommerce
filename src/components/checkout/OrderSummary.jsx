@@ -1,4 +1,5 @@
 import React from 'react'
+import { formatPriceCalculation } from '../../utils/formatPrice'
 
 function OrderSummary({totalPrice,cart,address,paymentMethod}) {
   return (
@@ -58,7 +59,8 @@ function OrderSummary({totalPrice,cart,address,paymentMethod}) {
                                                     {itme?.productName}
                                                 </p>
                                                 <p>
-                                                    {itme?.quantity}  x ${itme?.specialPrice} = ${itme.quantity * itme.specialPrice}
+                                                    {itme?.quantity}  x ${itme?.specialPrice} = 
+                                                        ${formatPriceCalculation(itme?.quantity,itme?.specialPrice)}
                                                 </p>
                                             </div>
                                 </div>
@@ -76,7 +78,7 @@ function OrderSummary({totalPrice,cart,address,paymentMethod}) {
                     <div className='flex justify-between'>
                         <span>Products</span>
                         <span>
-                            ${totalPrice}
+                            ${formatPriceCalculation(totalPrice, 1)}
                         </span>
                     </div>
                     <div className='flex justify-between'>
@@ -85,7 +87,7 @@ function OrderSummary({totalPrice,cart,address,paymentMethod}) {
                     </div>
                     <div className='flex font-semibold justify-between'>
                         <span>SubTotal</span>
-                        <span>${totalPrice}</span>
+                        <span>${formatPriceCalculation(totalPrice,1)}</span>
                     </div>
                 </div>
             </div>
