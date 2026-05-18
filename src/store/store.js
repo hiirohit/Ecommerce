@@ -17,7 +17,7 @@ const cartItems = localStorage.getItem("cartItems")
     : [] ;
 
 const initialState = {
-    auth : {user : user},
+    auth : {user : user },
     carts : {cart : cartItems}
 }
 

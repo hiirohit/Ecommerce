@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from '@mui/material'
+import { Alert, AlertTitle, Skeleton } from '@mui/material'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React, { useEffect } from 'react'
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Paymentform from './Paymentform';
 import { createStripePaymentSecret } from '../../store/actions/createStripePaymentSecret';
 
-const stripePromise = loadStripe(import.meta.env.STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 function StripePayment() {
     const dispatch = useDispatch();
@@ -19,6 +19,13 @@ function StripePayment() {
             dispatch(createStripePaymentSecret(totalPrice));
         }
     },[clientSecret]);
+    if(isloading){
+        return(
+            <div className='max-w-lg mx-auto'>
+                <Skeleton/>
+            </div>
+        )
+    }
 
     return (
      <>

@@ -11,6 +11,7 @@ import Login from './components/auth/Login'
 import PrivateRoute from './components/PrivateRoute'
 import Register from './components/auth/Register'
 import CheckOut from './components/checkout/CheckOut'
+import PaymentConfirmation from "./components/checkout/PaymentConfirmation"
 function App() {
   return (
     <React.Fragment>
@@ -24,6 +25,7 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/' element={<PrivateRoute />}>
           <Route path="/checkout" element={<CheckOut/>}/>
+          <Route path="/order-confirm" element={<PaymentConfirmation />}/>
         </Route>
         <Route path='/' element={<PrivateRoute publicPage />}>
           <Route path='/login' element={<Login />} />

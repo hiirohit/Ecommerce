@@ -38,7 +38,14 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 clientSecret:action.payload,
             }
- 
+         case "REMOVE_CLIENT_SECRET_ADDRESS":
+            return{
+                ...state,
+                clientSecret:null,
+                selectedUserAddress: null,
+            }
+        
+        
         default:
             return state;
     }
