@@ -12,15 +12,13 @@ function PaymentConfirmation() {
     const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState(" ");
     const {cart} = useSelector((state) => state.carts);
+    const {selectedUserCheckoutAddress} = useSelector((state) => state.auth);
     const {isloading, setIsLoading} = useState(false);
 
     const paymentIntent = searchParams.get("payment_intent");
     const clientSecret = searchParams.get("payment_intent_client_secret");
     const redirectStatus = searchParams.get("redirect_status");
    
-    const selectedUserCheckoutAddress = localStorage.getItem("CHECKOUT_ADDRESS")
-    ? JSON.parse(localStorage.getItem("CHECKOUT_ADDRESS")) 
-    : [] ;
     useEffect(() =>{
         if( paymentIntent && 
             clientSecret &&
