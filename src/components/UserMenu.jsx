@@ -59,7 +59,7 @@ function UserMenu() {
                 onClick={handleClose}>
                     <BiUser className='text-xl'/>
                     <span className='font-bold text-[16px] mt-1'>
-                        {user.jwtToken}
+                        {user.username}
                     </span>
             </MenuItem>
         </Link>

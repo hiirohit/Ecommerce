@@ -1,15 +1,12 @@
 import toast from "react-hot-toast"
 import api from "../../api/api"
 
-export const createStripePaymentSecret = (totalPrice) => async (dispatch,getState) => {
+export const createStripePaymentSecret = (sendData) => async (dispatch,getState) => {
     try {
         dispatch({
             type: "IS_FETCHING"
         })
-        const {data} = await api.post("/order/stripe-client-secret",{
-            "amount": Number(totalPrice) *100,
-            "currency":"usd"
-        })
+        const {data} = await api.post("/order/stripe-client-secret",sendData)
          dispatch({
             type: "CLIENT_SECRET",
             payload:data
