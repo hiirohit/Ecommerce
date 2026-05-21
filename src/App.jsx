@@ -12,6 +12,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Register from './components/auth/Register'
 import CheckOut from './components/checkout/CheckOut'
 import PaymentConfirmation from "./components/checkout/PaymentConfirmation"
+import AdminLayout from './components/admin/AdminLayout'
 function App() {
   return (
     <React.Fragment>
@@ -30,6 +31,10 @@ function App() {
         <Route path='/' element={<PrivateRoute publicPage />}>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+        </Route>
+        <Route path='/' element={<PrivateRoute  adminOnly/>}>
+          <Route path='/admin' element={<AdminLayout />} />
+          
         </Route>
         
       </Routes>
