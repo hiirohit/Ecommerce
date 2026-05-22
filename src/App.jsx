@@ -13,6 +13,10 @@ import Register from './components/auth/Register'
 import CheckOut from './components/checkout/CheckOut'
 import PaymentConfirmation from "./components/checkout/PaymentConfirmation"
 import AdminLayout from './components/admin/AdminLayout'
+import Dashboard from './components/admin/dashboard/Dashboard'
+import AdminProducts from './components/admin/products/AdminProducts'
+import Category from './components/admin/categories/Category'
+import Seller from './components/admin/sellers/Seller'
 function App() {
   return (
     <React.Fragment>
@@ -33,7 +37,12 @@ function App() {
           <Route path='/register' element={<Register />} />
         </Route>
         <Route path='/' element={<PrivateRoute  adminOnly/>}>
-          <Route path='/admin' element={<AdminLayout />} />
+          <Route path='/admin' element={<AdminLayout />} >
+          <Route path='' element={<Dashboard />}/>  
+          <Route path='products' element={<AdminProducts />}/>
+          <Route path='sellers' element={<Seller />}/>  
+          <Route path='categories' element={<Category />}/>    
+          </Route>
           
         </Route>
         

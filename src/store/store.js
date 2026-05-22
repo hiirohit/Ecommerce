@@ -4,6 +4,7 @@ import { errorReducer } from "./reducers/errorReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { authReducer } from "./reducers/authReducer";
 import { paymentMethodReducer } from "./reducers/paymentMethodReducer";
+import { adminReducer } from "./reducers/AdminReducer";
 
 
 
@@ -33,6 +34,7 @@ export const store = configureStore(
             carts: cartReducer,
             auth: authReducer,
             payment: paymentMethodReducer,
+            admin: adminReducer,
         },
         preloadedState: initialState,
     }
