@@ -17,6 +17,8 @@ import Dashboard from './components/admin/dashboard/Dashboard'
 import AdminProducts from './components/admin/products/AdminProducts'
 import Category from './components/admin/categories/Category'
 import Seller from './components/admin/sellers/Seller'
+import Orders from './components/admin/orders/Orders'
+
 function App() {
   return (
     <React.Fragment>
@@ -38,7 +40,8 @@ function App() {
         </Route>
         <Route path='/' element={<PrivateRoute  adminOnly/>}>
           <Route path='/admin' element={<AdminLayout />} >
-          <Route path='' element={<Dashboard />}/>  
+          <Route path='' element={<Dashboard />}/>
+          <Route path='orders' element={<Orders />}/>  
           <Route path='products' element={<AdminProducts />}/>
           <Route path='sellers' element={<Seller />}/>  
           <Route path='categories' element={<Category />}/>    
