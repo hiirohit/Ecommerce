@@ -8,7 +8,7 @@ export const orderReducer = (state = initialState,action) => {
         case "GET_ADMIN_ORDERS":
             return{
                 ...state,
-                adminOrder: action.pagload,
+                adminOrder: action.payload,
                     pagination: {
                         ...state,
                         pageNumber : action.pageNumber,

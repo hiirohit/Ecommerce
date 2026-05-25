@@ -2,22 +2,22 @@ import {DataGrid} from '@mui/x-data-grid'
 import React, { useState } from 'react'
 import { adminOrderTableColumn } from '../../helper/adminOrderTableColumn'
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom"
-function OrderTable({pagination,adminOrders}) {
+function OrderTable({pagination,adminOrder}) {
 
   const [currentPage,setCurrentPage] = useState(pagination?.pageNumber + 1 || 1)
   const [searchParams] = useSearchParams();
   const params = new URLSearchParams(searchParams)
   const pathName = useLocation().pathname;
   const Navigate = useNavigate();
-const TableRecords = adminOrders?.map((item) => {
-  return{
-    id: item.orderId,
-    email: item.email,
-    totalAmount: item.totalAmount,
-    status: item.orderStatus,
-    date:item.orderDate,
-  }
-})
+  const TableRecords = adminOrder?.map((item) => {
+                      return{
+                        id: item.orderId,
+                        email: item.email,
+                        totalAmount: item.totalAmount,
+                        status: item.orderStatus,
+                        date:item.orderDate,
+                      }
+                    })
 
 const handlePaginationChange = (paginationModel) => {
   const page = paginationModel.page  + 1;

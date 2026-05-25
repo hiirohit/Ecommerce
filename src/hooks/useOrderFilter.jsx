@@ -6,7 +6,7 @@ import { getOrdersForDashboard } from '../store/actions/getOrdersForDashboard';
 function useOrderFilter() {
 
      const [searchParams] = useSearchParams();
-    const dispatch = useDispatch();
+     const dispatch = useDispatch();
     
     useEffect(() => {
         const params = new URLSearchParams();

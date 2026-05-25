@@ -5,6 +5,7 @@ import { cartReducer } from "./reducers/cartReducer";
 import { authReducer } from "./reducers/authReducer";
 import { paymentMethodReducer } from "./reducers/paymentMethodReducer";
 import { adminReducer } from "./reducers/AdminReducer";
+import { orderReducer } from "./reducers/orderReducer";
 
 
 
@@ -35,6 +36,7 @@ export const store = configureStore(
             auth: authReducer,
             payment: paymentMethodReducer,
             admin: adminReducer,
+            order: orderReducer,
         },
         preloadedState: initialState,
     }
