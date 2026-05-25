@@ -1,69 +1,60 @@
 import {DataGrid} from '@mui/x-data-grid'
+import React, { useState } from 'react'
+import { adminOrderTableColumn } from '../../helper/adminOrderTableColumn'
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom"
+function OrderTable({pagination,adminOrders}) {
 
-import React from 'react'
+  const [currentPage,setCurrentPage] = useState(pagination?.pageNumber + 1 || 1)
+  const [searchParams] = useSearchParams();
+  const params = new URLSearchParams(searchParams)
+  const pathName = useLocation().pathname;
+  const Navigate = useNavigate();
+const TableRecords = adminOrders?.map((item) => {
+  return{
+    id: item.orderId,
+    email: item.email,
+    totalAmount: item.totalAmount,
+    status: item.orderStatus,
+    date:item.orderDate,
+  }
+})
 
-function OrderTable() {
-    const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+const handlePaginationChange = (paginationModel) => {
+  const page = paginationModel.page  + 1;
+  setCurrentPage(page)
+  params.set("page",page.toString());
+  Navigate(`${pathName}?${params}`)
+}  
   return (
     <div>
         <h1 className='text-slate-800 text-3xl text-center font-bold pb-6 uppercase'>
             All Orders
         </h1>
         <div>
-            <DataGrid
-        rows={rows}
-        columns={columns}
+            <DataGrid className='w-full'
+        rows={TableRecords}
+        columns={adminOrderTableColumn}
+        paginationMode='server'
+        rowCount={pagination?.totalElements || 0}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: pagination?.pageSize || 10,
+              page: currentPage - 1,
             },
           },
         }}
-        pageSizeOptions={[5]}
+        onPaginationModelChange={handlePaginationChange}
+        pageSizeOptions={[pagination?.pageSize || 10]}
         checkboxSelection
+        pagination
         disableRowSelectionOnClick
+        disableColumnResize
+        paginationOption = {{
+          showFirstButton : true,
+          showLastButton: true,
+          hideNextButton: currentPage === pagination?.totalPages,
+        }}
       />
         </div>
     </div>
