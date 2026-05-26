@@ -18,7 +18,6 @@ export const getOrdersForDashboard = (queryString) => async (dispatch) => {
             type: "IS_SUCCESS"
         });
     }catch(error){
-        console.log(error)
         dispatch({
             type: "IS_ERROR",
             payload: error?.response?.data?.message || "Failed to fetch Orders"

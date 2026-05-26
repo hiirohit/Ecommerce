@@ -16,7 +16,6 @@ function useOrderFilter() {
         params.set("pageNumber",currentPage - 1);
         
         const queryString = params.toString();
-        console.log("QUERYSTRING"+queryString);
             
         dispatch(getOrdersForDashboard(queryString));
     

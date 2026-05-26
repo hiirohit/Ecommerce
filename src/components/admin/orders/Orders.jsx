@@ -7,8 +7,6 @@ import useOrderFilter from '../../../hooks/useOrderFilter';
 function Orders() {
     const {adminOrder, pagination} = useSelector((state) => state.order);
     useOrderFilter();
-    console.log("test"+adminOrder)
-    console.log("[paginaton]" + pagination)
     const emptyOrder = !adminOrder || adminOrder?.length === 0;
 
   return (

@@ -2,6 +2,8 @@ import {DataGrid} from '@mui/x-data-grid'
 import React, { useState } from 'react'
 import { adminOrderTableColumn } from '../../helper/adminOrderTableColumn'
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom"
+import Modal from '../../shared/Modal'
+import UpdateOrderForm from './UpdateOrderForm'
 function OrderTable({pagination,adminOrder}) {
 
   const [currentPage,setCurrentPage] = useState(pagination?.pageNumber + 1 || 1)
@@ -9,6 +11,11 @@ function OrderTable({pagination,adminOrder}) {
   const params = new URLSearchParams(searchParams)
   const pathName = useLocation().pathname;
   const Navigate = useNavigate();
+  const [updateOpenModal, setUpdateOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [loader, setLoader] = useState(false);
+  
+  
   const TableRecords = adminOrder?.map((item) => {
                       return{
                         id: item.orderId,
@@ -19,12 +26,17 @@ function OrderTable({pagination,adminOrder}) {
                       }
                     })
 
-const handlePaginationChange = (paginationModel) => {
-  const page = paginationModel.page  + 1;
-  setCurrentPage(page)
-  params.set("page",page.toString());
-  Navigate(`${pathName}?${params}`)
-}  
+  const handlePaginationChange = (paginationModel) => {
+    const page = paginationModel.page  + 1;
+    setCurrentPage(page)
+    params.set("page",page.toString());
+    Navigate(`${pathName}?${params}`)
+  }  
+
+  const handleEdit = (order) => {
+    setSelectedItem(order)
+    setUpdateOpenModal(true)
+  }
   return (
     <div>
         <h1 className='text-slate-800 text-3xl text-center font-bold pb-6 uppercase'>
@@ -33,7 +45,7 @@ const handlePaginationChange = (paginationModel) => {
         <div>
             <DataGrid className='w-full'
         rows={TableRecords}
-        columns={adminOrderTableColumn}
+        columns={adminOrderTableColumn(handleEdit)}
         paginationMode='server'
         rowCount={pagination?.totalElements || 0}
         initialState={{
@@ -56,7 +68,20 @@ const handlePaginationChange = (paginationModel) => {
           hideNextButton: currentPage === pagination?.totalPages,
         }}
       />
-        </div>
+    </div>
+        <Modal  
+          open={updateOpenModal}
+          setOpen={setUpdateOpenModal}
+          title='Update Order '
+          >
+            <UpdateOrderForm
+              setOpen={setUpdateOpenModal}
+              open={updateOpenModal}
+              loader={loader}
+              setLoader={setLoader}
+              selectedId={selectedItem.id}
+              selectedItem={selectedItem}/>
+          </Modal>
     </div>
   )
 }
