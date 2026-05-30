@@ -2,8 +2,9 @@ import MenuItem from '@mui/material/MenuItem';
 import React, { useState } from 'react'
 import {Button, FormControl, FormHelperText, InputLabel,Select} from "@mui/material"
 import { FaSpinner } from 'react-icons/fa';
-
-
+import{ useDispatch } from "react-redux"
+import { updateOrderStatuFromDashboard } from '../../../store/actions/updateOrderStatusFromDashboard';
+import {toast} from 'react-hot-toast'
 function UpdateOrderForm({open, setOpen, selectedId, selectedItem, loader, setLoader}) {
     const ORDER_STATUSES = [
         "Pending",
@@ -15,14 +16,29 @@ function UpdateOrderForm({open, setOpen, selectedId, selectedItem, loader, setLo
     ];
     const [orderStatus, setOrderStatus] = useState(selectedItem?.status || "Accepted");
     const [error, setError] = useState();
-    
+    const dispatch = useDispatch();
+    const updateOrderStatus = (e) =>{
+         e.preventDefault();
+        if(!orderStatus){
+            setError("Order status is required");
+            return;
+        }
+        dispatch(updateOrderStatuFromDashboard(
+            selectedId,
+            orderStatus,
+            toast,
+            setLoader
+
+        ));
+
+    }
     return (
     <div className='py-5 relative h-full'>
-        <form className='space-y-4' onSubmit={""}>
+        <form className='space-y-4' onSubmit={updateOrderStatus}>
             <FormControl fullWidth variant='outlined' error={!!error}>
                 <InputLabel id="order-status-label">Order Status</InputLabel>
                 <Select 
-                    lableId="order-status-label"
+                    labelId="order-status-label"
                     label='order Status'
                     value={orderStatus}
                     onChange={(e) => {

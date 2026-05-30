@@ -44,29 +44,29 @@ function OrderTable({pagination,adminOrder}) {
         </h1>
         <div>
             <DataGrid className='w-full'
-        rows={TableRecords}
-        columns={adminOrderTableColumn(handleEdit)}
-        paginationMode='server'
-        rowCount={pagination?.totalElements || 0}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: pagination?.pageSize || 10,
-              page: currentPage - 1,
-            },
-          },
-        }}
-        onPaginationModelChange={handlePaginationChange}
-        pageSizeOptions={[pagination?.pageSize || 10]}
-        checkboxSelection
-        pagination
-        disableRowSelectionOnClick
-        disableColumnResize
-        paginationOption = {{
-          showFirstButton : true,
-          showLastButton: true,
-          hideNextButton: currentPage === pagination?.totalPages,
-        }}
+              rows={TableRecords}
+              columns={adminOrderTableColumn(handleEdit)}
+              paginationMode='server'
+              rowCount={pagination?.totalElements || 0}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: pagination?.pageSize || 10,
+                    page: currentPage - 1,
+                  },
+                },
+              }}
+              onPaginationModelChange={handlePaginationChange}
+              pageSizeOptions={[pagination?.pageSize || 10]}
+              checkboxSelection
+              pagination
+              disableRowSelectionOnClick
+              disableColumnResize
+              paginationOption = {{
+                showFirstButton : true,
+                showLastButton: true,
+                hideNextButton: currentPage === pagination?.totalPages,
+              }}
       />
     </div>
         <Modal  
