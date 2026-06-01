@@ -6,14 +6,20 @@ import { Skeleton } from '@mui/material';
 import { FaBoxOpen } from 'react-icons/fa';
 import { DataGrid } from '@mui/x-data-grid';
 import { adminProductsTableColumn } from '../../helper/adminOrderTableColumn';
+import useDashboardProductFilter from '../../../hooks/useDashboardProductFilter';
+import Modal from '../../shared/Modal';
+import AddProductForm from './AddProductForm';
 function AdminProducts() {
 
   
-  const products = [{"productId":52,"productName":"ipad nor","image":"http/:sdjhgshc","description":"hig khduigcuisbcuibs","quantity":20,"price":1500.0,"discount":23.0,"specialPrice":1000.0}]
-  const { pagination} = useSelector((state) => state.order);
+  const {products, pagination} = useSelector((state) => state.products);
   const emptyProduct = !products || products?.length === 0;
   const {isLoading, errorMessage } = useSelector((state) => state.error)
   const [currentPage,setCurrentPage] = useState(pagination?.pageNumber + 1 || 1)
+  const [openUpdateModal,setOpenUpdateModal] = useState(false);
+  const [selectedProduct,setSelectedProduct] = useState('');
+  useDashboardProductFilter();
+ 
   const TableRecords = products?.map((item) => {
           return{
             id: item.productId,
@@ -27,7 +33,8 @@ function AdminProducts() {
           }
         })
     const handleEdit = (product) => {
-
+      setSelectedProduct(product)
+      setOpenUpdateModal(true)
     }
     const handleDelete = (product) => {
       
@@ -104,6 +111,16 @@ function AdminProducts() {
         )}
         </>
       )}
+      <Modal 
+        open={openUpdateModal}
+        setOpen={setOpenUpdateModal}
+        title='Update Product'>
+          <AddProductForm
+            setOpen={setOpenUpdateModal}
+            product={selectedProduct}
+            update={openUpdateModal}
+            />
+      </Modal>
     </div>
   )
 }

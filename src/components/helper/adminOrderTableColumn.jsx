@@ -110,25 +110,25 @@ export const adminProductsTableColumn = (
         <div className='flex justify-center items-center space-x-2 h-full'>
           <button 
             onClick={() => handleImageUpload(params.row)}
-            className='flex items-center bg-blue-500 text-white px-4 h-9 rounded-md cursor-pointer'>
+            className='flex items-center bg-green-500 hover:bg-green-600 transition duration-300 text-white px-4 h-9 rounded-md cursor-pointer'>
             <FaImage className='mr-2 '/>
               Image
           </button>
           <button 
             onClick={() => handleEdit(params.row)}
-            className='flex items-center bg-blue-500 text-white px-4 h-9 rounded-md cursor-pointer'>
+            className='flex items-center bg-blue-500 hover:bg-blue-600 transition duration-300 text-white px-4 h-9 rounded-md cursor-pointer'>
             <FaEdit className='mr-2 '/>
               edit
           </button>
           <button 
             onClick={() => handleDelete(params.row)}
-            className='flex items-center bg-blue-500 text-white px-4 h-9 rounded-md cursor-pointer'>
+            className='flex items-center bg-red-500 hover:bg-red-600 transition duration-300 text-white px-4 h-9 rounded-md cursor-pointer'>
             <FaEdit className='mr-2 '/>
               Delete
           </button>
           <button 
             onClick={() => handleProductView(params.row)}
-            className='flex items-center bg-blue-500 text-white px-4 h-9 rounded-md cursor-pointer'>
+            className='flex items-center bg-gray-700 hover:bg-gray-800 transition duration-300 text-white px-4 h-9 rounded-md cursor-pointer'>
             <FaEdit className='mr-2 '/>
               View
           </button>
