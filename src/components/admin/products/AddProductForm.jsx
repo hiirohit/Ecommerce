@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import {useForm} from 'react-hook-form'
 import InputField from '../../shared/InputField';
-import { Button } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProductFromDashboard } from '../../../store/actions/updateProductFromDashboard';
+import toast from 'react-hot-toast';
+import { FaSpinner } from 'react-icons/fa';
+import SelectedTextField from '../../shared/SelectedTextField';
+import { fetchCategories } from '../../../store/actions/fetchCategories';
+import ErrorPage from '../../shared/ErrorPage';
 function AddProductForm({setOpen,product, update=false}) {
     const [loader, setLoader] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState();
+    const {categories} =useSelector((state) => state.products)
+    const {categoryLoader, errorMessage} = useSelector((state) => state.error)
+    const dispatch  = useDispatch();
     const {
         register,
         handleSubmit,
@@ -13,6 +24,18 @@ function AddProductForm({setOpen,product, update=false}) {
     } = useForm({
         mode:"onTouched"
     });
+    const saveProductHandler = (data) => {
+        if(!update){
+            <div></div>
+        }else{
+            const sendData = {
+                ...data,
+                id: product.id,
+            }
+            dispatch(updateProductFromDashboard(sendData,toast,reset,setLoader,setOpen));
+            
+        }
+    }
 
     useEffect(() => {
         if(update && product){
@@ -25,23 +48,51 @@ function AddProductForm({setOpen,product, update=false}) {
 
         }
     },[update,product])
+
+    useEffect(() => {
+        if(!update){
+            dispatch(fetchCategories())
+        }
+    },[dispatch,update])
+
+    useEffect(() => {
+        if(!categoryLoader && categories){
+            setSelectedCategory(categories[0]);
+        }
+    },[categories,categoryLoader])
+
+    if(categoryLoader) return <Skeleton/>
+    if(errorMessage) return <ErrorPage message={errorMessage}/>
+    
     return (
     <div className='py-5 relative h-full'>
-        <form className='space-y-4'>
+        <form
+            onSubmit={handleSubmit(saveProductHandler)} 
+            className='space-y-4'>
             <div className='flex md:flex-row flex-col gap-4 w-full'>
                 <InputField
-                    Lable="ProductName"
+                    label="ProductName"
                     required
                     id="productName"
                     type="text"
                     message="this field is required"
                     register={register}
                     placeholder="Product Name"
-                    errors={errors}/>
+                    errors={errors}
+                    />
+                    {!update && (
+                        <SelectedTextField 
+                            label="Select Categories"
+                            select={selectedCategory}
+                            setSelect={setSelectedCategory}
+                            lists={categories}
+                            />
+                    )}
             </div>
+            
             <div className='flex md:flex-row flex-col gap-4 w-full'>
                 <InputField
-                    Lable="Price"
+                    label="Price"
                     required
                     id="price"
                     type="number"
@@ -51,7 +102,7 @@ function AddProductForm({setOpen,product, update=false}) {
                     errors={errors}
                     />
                     <InputField
-                    Lable="Quantity"
+                    label="Quantity"
                     required
                     id="quantity"
                     type="number"
@@ -64,7 +115,7 @@ function AddProductForm({setOpen,product, update=false}) {
             </div>
             <div className='flex md:flex-row flex-col gap-4 w-full'>
                 <InputField
-                    Lable="Discount"
+                    label="Discount"
                     required
                     id="discount"
                     type="number"
@@ -74,7 +125,7 @@ function AddProductForm({setOpen,product, update=false}) {
                     errors={errors}
                     />
                     <InputField
-                    Lable="SpecialPrice"
+                    label="SpecialPrice"
                     required
                     id="specialPrice"
                     type="number"

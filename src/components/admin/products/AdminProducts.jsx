@@ -9,6 +9,7 @@ import { adminProductsTableColumn } from '../../helper/adminOrderTableColumn';
 import useDashboardProductFilter from '../../../hooks/useDashboardProductFilter';
 import Modal from '../../shared/Modal';
 import AddProductForm from './AddProductForm';
+import DeleteModal from '../../shared/DeleteModal';
 function AdminProducts() {
 
   
@@ -17,6 +18,8 @@ function AdminProducts() {
   const {isLoading, errorMessage } = useSelector((state) => state.error)
   const [currentPage,setCurrentPage] = useState(pagination?.pageNumber + 1 || 1)
   const [openUpdateModal,setOpenUpdateModal] = useState(false);
+  const [openAddModal,setOpenAddModal] = useState(false);
+  const [openDeleteModal,setOpenDeleteModal] = useState(false);
   const [selectedProduct,setSelectedProduct] = useState('');
   useDashboardProductFilter();
  
@@ -37,7 +40,8 @@ function AdminProducts() {
       setOpenUpdateModal(true)
     }
     const handleDelete = (product) => {
-      
+      setSelectedProduct(product)
+      setOpenDeleteModal(true)
     }
     const handleImageUpload = (product) => {
       
@@ -54,7 +58,9 @@ function AdminProducts() {
   return (
     <div className=''>
       <div className='pt-6 pb-10 flex justify-end'>
-        <button className='bg-blue-500 hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300'>
+        <button
+          onClick={() => setOpenAddModal(true)} 
+          className='bg-blue-500 hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300'>
           <MdAddShoppingCart className='text-xl'/>
           Add Product
         </button>
@@ -112,15 +118,23 @@ function AdminProducts() {
         </>
       )}
       <Modal 
-        open={openUpdateModal}
-        setOpen={setOpenUpdateModal}
-        title='Update Product'>
+        open={openUpdateModal || openAddModal}
+        setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
+        title={openUpdateModal ? 'Update Product' : "Add Product"}>
           <AddProductForm
-            setOpen={setOpenUpdateModal}
+            setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
             product={selectedProduct}
             update={openUpdateModal}
             />
       </Modal>
+      <DeleteModal 
+        open={openDeleteModal}
+        setOpen={setOpenDeleteModal}
+        title="Delete Product"
+        onDeleteHandler={handleDelete}/>
+        
+      
+      
     </div>
   )
 }
