@@ -47,7 +47,9 @@ function DeleteModal({ onDeleteHandler, loader, open, setOpen, title}) {
                                 </div>
                             </div>
                             <div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
-                                <button className='inline-flex w-full bg-red-500 justify-center rounded-md px-3 py-2 text-sm'>
+                                <button
+                                    onClick={onDeleteHandler}  
+                                    className='inline-flex w-full bg-red-500 justify-center rounded-md px-3 py-2 text-sm'>
                                     {loader ? "Loading..": "Delete"}
                                 </button>
                                 <button

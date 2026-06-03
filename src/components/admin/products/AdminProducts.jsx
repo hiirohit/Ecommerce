@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import {MdAddShoppingCart} from 'react-icons/md'
-import { LoaderIcon } from 'react-hot-toast';
+import toast, { LoaderIcon } from 'react-hot-toast';
 import { Skeleton } from '@mui/material';
 import { FaBoxOpen } from 'react-icons/fa';
 import { DataGrid } from '@mui/x-data-grid';
 import { adminProductsTableColumn } from '../../helper/adminOrderTableColumn';
+import {useDispatch} from 'react-redux'
 import useDashboardProductFilter from '../../../hooks/useDashboardProductFilter';
 import Modal from '../../shared/Modal';
 import AddProductForm from './AddProductForm';
 import DeleteModal from '../../shared/DeleteModal';
+import { deleteProduct } from '../../../store/actions/deleteProduct';
 function AdminProducts() {
 
   
@@ -21,6 +23,8 @@ function AdminProducts() {
   const [openAddModal,setOpenAddModal] = useState(false);
   const [openDeleteModal,setOpenDeleteModal] = useState(false);
   const [selectedProduct,setSelectedProduct] = useState('');
+  const dispatch = useDispatch();
+  const [loader,setLoader] = useState(false)
   useDashboardProductFilter();
  
   const TableRecords = products?.map((item) => {
@@ -52,7 +56,9 @@ function AdminProducts() {
     const handlePaginationChange = (paginationModal) => {
     
     }
-
+    const onDeleteHandler = () => {
+      dispatch(deleteProduct(toast,selectedProduct?.id,setLoader,setOpenDeleteModal));
+    }
         
 
   return (
@@ -130,8 +136,9 @@ function AdminProducts() {
       <DeleteModal 
         open={openDeleteModal}
         setOpen={setOpenDeleteModal}
+        loader={loader}
         title="Delete Product"
-        onDeleteHandler={handleDelete}/>
+        onDeleteHandler={onDeleteHandler}/>
         
       
       
