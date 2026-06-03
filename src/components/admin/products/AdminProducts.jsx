@@ -12,6 +12,7 @@ import Modal from '../../shared/Modal';
 import AddProductForm from './AddProductForm';
 import DeleteModal from '../../shared/DeleteModal';
 import { deleteProduct } from '../../../store/actions/deleteProduct';
+import ImageUploadForm from './ImageUploadForm';
 function AdminProducts() {
 
   
@@ -22,6 +23,7 @@ function AdminProducts() {
   const [openUpdateModal,setOpenUpdateModal] = useState(false);
   const [openAddModal,setOpenAddModal] = useState(false);
   const [openDeleteModal,setOpenDeleteModal] = useState(false);
+  const [openImageUploadModal,setOpenImageUploadModal] = useState(false);
   const [selectedProduct,setSelectedProduct] = useState('');
   const dispatch = useDispatch();
   const [loader,setLoader] = useState(false)
@@ -48,7 +50,8 @@ function AdminProducts() {
       setOpenDeleteModal(true)
     }
     const handleImageUpload = (product) => {
-      
+      setSelectedProduct(product)
+      setOpenImageUploadModal(true)
     }
     const handleProductView = (product) => {
       
@@ -57,7 +60,8 @@ function AdminProducts() {
     
     }
     const onDeleteHandler = () => {
-      dispatch(deleteProduct(toast,selectedProduct?.id,setLoader,setOpenDeleteModal));
+      dispatch(deleteProduct(toast,selectedProduct?.id,setLoader));
+      setOpenDeleteModal(false)
     }
         
 
@@ -131,6 +135,15 @@ function AdminProducts() {
             setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
             product={selectedProduct}
             update={openUpdateModal}
+            />
+      </Modal>
+      <Modal 
+        open={openImageUploadModal}
+        setOpen={setOpenImageUploadModal}
+        title="Add Product Image">
+          <ImageUploadForm
+            setOpen={setOpenImageUploadModal}
+            product={selectedProduct}
             />
       </Modal>
       <DeleteModal 
