@@ -2,9 +2,11 @@ import { Button } from '@mui/material';
 import React, { useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaCloudDownloadAlt, FaSpinner } from 'react-icons/fa'
-
-function ImageUploadForm() {
+import { useDispatch } from 'react-redux'
+import { updateProductImageFromDashboard } from '../../../store/actions/updateProductImageFromDashboard';
+function ImageUploadForm({setOpen,product}) {
     const fileInputRef = useRef();
+    const dispatch = useDispatch();
     const [previewImage,setPreviewImage] = useState(null);
     const [loader,setLoader] = useState(false);
     const [seletedFile,setSelectedFile] = useState(null); 
@@ -16,16 +18,25 @@ function ImageUploadForm() {
                 setPreviewImage(reader.result);
             };
             reader.readAsDataURL(file);
-            seletedFile(file);
+            setSelectedFile(file);
         }else{
             toast.error("Please select a valid image file(.jpeg, .png, .jpg")
             setPreviewImage(null)
             setSelectedFile(null)
         }
     }
-    const addNewImageHandler = () => {
-
-    }
+    const addNewImageHandler = async(e) => {
+            e.preventDefault();
+            console.log("selected File",seletedFile);
+            if(!seletedFile){
+                toast.error("Please select an image before saving.");
+                return;
+            }else{
+                const formData = new FormData();
+                formData.append("image",seletedFile)
+                dispatch(updateProductImageFromDashboard(formData, product.id, toast, setLoader, setOpen));
+            }
+    };
     const handleClearImage = () => {
         setPreviewImage(null)
         setSelectedFile(null)

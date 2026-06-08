@@ -9,6 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import SelectedTextField from '../../shared/SelectedTextField';
 import { fetchCategories } from '../../../store/actions/fetchCategories';
 import ErrorPage from '../../shared/ErrorPage';
+import { addNewProductFromDashboard } from '../../../store/actions/addNewProductFromDashboard';
 function AddProductForm({setOpen,product, update=false}) {
     const [loader, setLoader] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState();
@@ -26,7 +27,11 @@ function AddProductForm({setOpen,product, update=false}) {
     });
     const saveProductHandler = (data) => {
         if(!update){
-            <div></div>
+            const sendData = {
+                ...data,
+                categoryId: selectedCategory.categoryId,
+            }
+            dispatch(addNewProductFromDashboard(sendData, toast, reset,setLoader,setOpen))
         }else{
             const sendData = {
                 ...data,
@@ -148,6 +153,7 @@ function AddProductForm({setOpen,product, update=false}) {
                             errors["description"]?.message ? "border-red-500" : "border-slate-700"
                         }`
                     }
+                    maxLength={255}
                     {...register("description", {
                         required : {value: true, message:"Desccription is required"},
                     })}
@@ -179,7 +185,7 @@ function AddProductForm({setOpen,product, update=false}) {
                                             <FaSpinner/> Loading...
                                         </div>
                                     ) : (
-                                        "Update"
+                                        "save"
                                     )}
                             </Button>
                         </div>

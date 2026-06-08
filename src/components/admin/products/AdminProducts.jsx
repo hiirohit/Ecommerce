@@ -13,6 +13,8 @@ import AddProductForm from './AddProductForm';
 import DeleteModal from '../../shared/DeleteModal';
 import { deleteProduct } from '../../../store/actions/deleteProduct';
 import ImageUploadForm from './ImageUploadForm';
+import ProductViewModal from '../../shared/ProductViewModal';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 function AdminProducts() {
 
   
@@ -22,9 +24,16 @@ function AdminProducts() {
   const [currentPage,setCurrentPage] = useState(pagination?.pageNumber + 1 || 1)
   const [openUpdateModal,setOpenUpdateModal] = useState(false);
   const [openAddModal,setOpenAddModal] = useState(false);
+  const [openProductViewModal,setOpenProductViewModal] = useState(false);
   const [openDeleteModal,setOpenDeleteModal] = useState(false);
   const [openImageUploadModal,setOpenImageUploadModal] = useState(false);
   const [selectedProduct,setSelectedProduct] = useState('');
+ 
+  const [searchParams] = useSearchParams();
+  const params = new URLSearchParams(searchParams)
+  const pathName = useLocation().pathname;
+  const Navigate = useNavigate();
+ 
   const dispatch = useDispatch();
   const [loader,setLoader] = useState(false)
   useDashboardProductFilter();
@@ -54,10 +63,14 @@ function AdminProducts() {
       setOpenImageUploadModal(true)
     }
     const handleProductView = (product) => {
-      
+      setSelectedProduct(product);  
+      setOpenProductViewModal(true)
     }
     const handlePaginationChange = (paginationModal) => {
-    
+       const page = paginationModal.page  + 1;
+    setCurrentPage(page)
+    params.set("page",page.toString());
+    Navigate(`${pathName}?${params}`)
     }
     const onDeleteHandler = () => {
       dispatch(deleteProduct(toast,selectedProduct?.id,setLoader));
@@ -151,10 +164,15 @@ function AdminProducts() {
         setOpen={setOpenDeleteModal}
         loader={loader}
         title="Delete Product"
-        onDeleteHandler={onDeleteHandler}/>
-        
-      
-      
+        onDeleteHandler={onDeleteHandler}
+        />
+
+        <ProductViewModal
+          open={openProductViewModal}
+          setOpen={setOpenProductViewModal}
+          product={selectedProduct}
+        />
+
     </div>
   )
 }
