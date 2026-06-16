@@ -53,7 +53,7 @@ function UserMenu() {
             sx:{width:160},
         }}
       >
-        <Link to="/profile">
+        <Link to="/">
             <MenuItem
                 className='flex gap-2' 
                 onClick={handleClose}>
@@ -63,7 +63,7 @@ function UserMenu() {
                     </span>
             </MenuItem>
         </Link>
-        <Link to="/profile/orders">
+        <Link to="/cart">
             <MenuItem
                 className='flex gap-2' 
                 onClick={handleClose}>
@@ -78,10 +78,10 @@ function UserMenu() {
                 className='flex gap-2' 
                 onClick={logOutHandler}>
                     <div className='font-semibold w-full flex gap-2 items-center bg-button-gradient px-4 py-1 text-white rounded-sm'>
-                    <IoExitOutline className='text-xl'/>
-                    <span className='font-bold text-[16px] mt-1'>
-                        LogOut
-                    </span>
+                      <IoExitOutline className='text-xl'/>
+                        <span className='font-bold text-[16px] mt-1'>
+                            LogOut
+                        </span>
                     </div>
             </MenuItem>
       </Menu>

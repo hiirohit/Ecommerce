@@ -40,15 +40,13 @@ function App() {
         </Route>
         <Route path='/' element={<PrivateRoute  adminOnly/>}>
           <Route path='/admin' element={<AdminLayout />} >
-          <Route path='' element={<Dashboard />}/>
-          <Route path='orders' element={<Orders />}/>  
-          <Route path='products' element={<AdminProducts />}/>
-          <Route path='sellers' element={<Seller />}/>  
-          <Route path='categories' element={<Category />}/>    
+            <Route path='' element={<Dashboard />}/>
+            <Route path='orders' element={<Orders />}/>  
+            <Route path='products' element={<AdminProducts />}/>
+            <Route path='sellers' element={<Seller />}/>  
+            <Route path='categories' element={<Category />}/>    
           </Route>
-          
         </Route>
-        
       </Routes>
     </Router>
     <Toaster position='bottom-center'/>
