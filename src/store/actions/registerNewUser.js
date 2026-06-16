@@ -3,6 +3,7 @@ import api from "../../api/api";
 export const  registerNewUser = (sendData, toast, reset, navigate, setLoader) => async (dispatch) => {
     try {
         setLoader(true);
+        console.log("loader click")
         const {data} = await api.post("/auth/signup",sendData);
         reset();
         toast.success(data?.message || "User Registered Successfully");

@@ -6,8 +6,8 @@ import { fetchCategories } from "../store/actions/fetchCategories";
 
 function useCategoryFilter() {
 
-    const [searchParams] = useSearchParams(); // Access search params from the URL
-    const dispatch = useDispatch(); // Get the dispatch function to call actions
+    const [searchParams] = useSearchParams(); 
+    const dispatch = useDispatch(); 
 
     useEffect(() => {
         const params = new URLSearchParams(); // Create new URLSearchParams object
@@ -21,7 +21,6 @@ function useCategoryFilter() {
         // Convert params to a query string
         const queryString = params.toString();
 
-        // Dispatch action to fetch categories using the constructed query string
         dispatch(fetchCategories(queryString));
     }, [dispatch, searchParams]);
 };

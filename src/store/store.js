@@ -6,6 +6,7 @@ import { authReducer } from "./reducers/authReducer";
 import { paymentMethodReducer } from "./reducers/paymentMethodReducer";
 import { adminReducer } from "./reducers/AdminReducer";
 import { orderReducer } from "./reducers/orderReducer";
+import { sellerReducer } from "./reducers/sellerReducer";
 
 
 
@@ -37,6 +38,7 @@ export const store = configureStore(
             payment: paymentMethodReducer,
             admin: adminReducer,
             order: orderReducer,
+            seller: sellerReducer,
         },
         preloadedState: initialState,
     }
