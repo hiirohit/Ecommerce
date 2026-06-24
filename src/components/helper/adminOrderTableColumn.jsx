@@ -15,19 +15,19 @@ export const adminProductsTableColumn = (
     disableColumnMenu:true,
     field: "id",
     headerName: "ID",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal border",
-    renderHeader:(params) => <span className='text-center'>Product ID</span>
+    renderHeader:(params) => <span>Product ID</span>
   },
   { 
     sortable: false,
     disableColumnMenu:true,
     field: "productName",
     headerName: "Product Name",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
     headerClassName: "text-black text-center font-semibold border",
@@ -39,61 +39,92 @@ export const adminProductsTableColumn = (
     disableColumnMenu:true,
     field: "price",
     headerName: "Price",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal border",
-    renderHeader:(params) => <span className='text-center'>Price</span>
+    renderHeader:(params) => <span>Price</span>
   },
   { 
     sortable: false,
     disableColumnMenu:true,
     field: "quantity",
     headerName: "Quantity",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal border",
-    renderHeader:(params) => <span className='text-center'>Quantity</span>
+    renderHeader:(params) => <span>Quantity</span>
   },
   { 
     sortable: false,
     disableColumnMenu:true,
     field: "specialPrice",
     headerName: "Price",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
     headerClassName: "text-black font-semibold text-center border",
     cellClassName: "text-slate-700 font-normal border text-center",
-    renderHeader:(params) => <span className='text-center'>Special Price</span>
+    renderHeader:(params) => <span>Special Price</span>
   },
   { 
     sortable: false,
     disableColumnMenu:true,
     field: "description",
     headerName: "Image",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
-    headerClassName: "text-black font-semibold text-center border",
+    headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal border",
-    renderHeader:(params) => <span className="ps-10">Description</span>,
-    
+    renderHeader:(params) => <span >Description</span>,
+    renderCell: (params) => {
+      return(
+        <div
+           style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              width: "100%",
+            }}
+          title={params.value}
+          >
+            {params.value}
+        </div>
+      )
+    }
   },
   { 
     sortable: false,
     disableColumnMenu:true,
     field: "image",
     headerName: "Image",
-    Width: 200,
+    minWidth: 200,
     headerAlign: "center",
     editable:false,
-    headerClassName: "text-black font-semibold text-center border",
+    headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal border",
-    renderHeader:(params) => <span className="ps-10">Image</span>,
+    renderHeader:(params) => <span>Image</span>,
+    renderCell:(params) => {
+      const imageUrl = params.value || "";
+      const imageName = imageUrl.split("/").pop();
+      return(
+            <div
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "100%",
+              }}
+              title={imageName}
+            > 
+            {imageName}
+          </div>
+      )
+    }
     
   },{ 
     sortable: false,
@@ -103,7 +134,7 @@ export const adminProductsTableColumn = (
     minWidth: 500,
     headerAlign: "center",
     editable:false,
-    headerClassName: "text-black font-semibold text-center border",
+    headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal border",
     renderHeader:(params) => <span>Action</span>,
     renderCell : (params) => {

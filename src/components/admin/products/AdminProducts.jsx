@@ -101,7 +101,7 @@ function AdminProducts() {
           <div className='flex flex-col items-center justify-center text-gray-500 py-10'>
             <FaBoxOpen size={50} className='mb-3'/>
             <h2 className='text-2xl font-semibold'>
-              No Product created yet!
+              No Product created yet!!
             </h2>
           </div>
         ) : (

@@ -1,10 +1,11 @@
 import api  from "../../api/api"
-export const dashboardProductAction = (queryString) => async (dispatch) => {
+export const dashboardProductAction = (queryString, isAdmin) => async (dispatch) => {
     try{
         dispatch({
             type: "IS_FETCHING"
         })
-        const {data}  = await api.get(`/admin/products?${queryString}`);
+        const entpoint = isAdmin ? "/admin/products" : "/seller/products"
+        const {data}  = await api.get(`${entpoint}?${queryString}`);
         dispatch({
             type: "FETCH_PRODUCTS",
             payload: data.content,

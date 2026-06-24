@@ -1,4 +1,3 @@
-import { href } from "react-router-dom";
 import { bannerImageOne } from "./constant";
 import {FaBoxOpen, FaHome, FaShoppingCart, FaStore, FaThList} from "react-icons/fa"
 export const bannerLists = [
@@ -58,4 +57,20 @@ export const adminNavigation = [
 
   },
   
+]
+
+export const sellerNavigation = [
+
+  {
+    name:"Orders",
+    href:"/admin/orders",
+    icon:FaShoppingCart,
+    current : true
+  },
+   {
+    name:"Products",
+    href:"/admin/products",
+    icon:FaBoxOpen,
+
+  },
 ]

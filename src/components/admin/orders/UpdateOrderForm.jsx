@@ -2,7 +2,7 @@ import MenuItem from '@mui/material/MenuItem';
 import React, { useState } from 'react'
 import {Button, FormControl, FormHelperText, InputLabel,Select} from "@mui/material"
 import { FaSpinner } from 'react-icons/fa';
-import{ useDispatch } from "react-redux"
+import{ useDispatch, useSelector } from "react-redux"
 import { updateOrderStatuFromDashboard } from '../../../store/actions/updateOrderStatusFromDashboard';
 import {toast} from 'react-hot-toast'
 function UpdateOrderForm({open, setOpen, selectedId, selectedItem, loader, setLoader}) {
@@ -14,6 +14,8 @@ function UpdateOrderForm({open, setOpen, selectedId, selectedItem, loader, setLo
         "Cancelled",
         "Accepted",
     ];
+    const { user } = useSelector((state) =>  state.auth);
+    const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
     const [orderStatus, setOrderStatus] = useState(selectedItem?.status || "Accepted");
     const [error, setError] = useState();
     const dispatch = useDispatch();
@@ -27,7 +29,8 @@ function UpdateOrderForm({open, setOpen, selectedId, selectedItem, loader, setLo
             selectedId,
             orderStatus,
             toast,
-            setLoader
+            setLoader,
+            isAdmin
 
         ));
 
