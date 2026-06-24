@@ -150,7 +150,7 @@ export const adminProductsTableColumn = (
             onClick={() => handleEdit(params.row)}
             className='flex items-center bg-blue-500 hover:bg-blue-600 transition duration-300 text-white px-4 h-9 rounded-md cursor-pointer'>
             <FaEdit className='mr-2 '/>
-              edit
+              edit 
           </button>
           <button 
             onClick={() => handleDelete(params.row)}
